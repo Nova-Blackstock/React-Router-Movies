@@ -1,6 +1,9 @@
 import React from 'react';
+import { useHistory, useParams, Link } from 'react-router-dom'
+
 
 const MovieList = props => {
+
   return (
     <div className="movie-list">
       {props.movies.map(movie => (
@@ -12,8 +15,15 @@ const MovieList = props => {
 
 function MovieDetails({ movie }) {
   const { title, director, metascore } = movie;
+  const history = useHistory()
+  const { movieId } = useParams()
+  const routeToMovie = () =>{
+    history.push(`/movies/${movieId}`)
+  }
+  
   return (
-    <div className="movie-card">
+    <Link to={`/movies/${movie.id}`}>
+    <div className="movie-card" onClick={routeToMovie}>
       <h2>{title}</h2>
       <div className="movie-director">
         Director: <em>{director}</em>
@@ -22,6 +32,7 @@ function MovieDetails({ movie }) {
         Metascore: <strong>{metascore}</strong>
       </div>
     </div>
+    </Link>
   );
 }
 
